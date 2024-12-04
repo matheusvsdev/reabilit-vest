@@ -4,7 +4,7 @@ Este projeto foi criado para auxiliar na Reabilitação Vestibular de pessoas qu
 
 Foi desenvolvido inicialmente para ajudar minha mãe, que sofreu uma perda auditiva e vestibular devido a um vírus e precisava de uma ferramenta para realizar exercícios de reabilitação em casa. Agora, estou compartilhando com a comunidade, para que talvez possa ajudar outras pessoas com problemas semelhantes.
 
-[Vídeo de demonstração do ReabilitVest](./assets/reabilit-vest.mp4)
+[Vídeo de demonstração do ReabilitVest](./assets/reabilitVest.mp4)
 
 ## Requisitos  
   
