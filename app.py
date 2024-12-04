@@ -5,7 +5,8 @@ import sys
 # Constantes
 BALL_RADIUS = 20
 BALL_SPEED = 50.0
-SIMULATION_TIME = 60 # 1 minuto
+SIMULATION_TIME = 65  # 1 minuto + 5 segundos de contagem regressiva
+
 
 # Enum para os níveis de dificuldade
 class Level:
@@ -14,12 +15,14 @@ class Level:
     HARD = 3
     RETURN = 4
 
+
 # Enum para os tipos de simulação
 class SimulationType:
-    VERTICAL =1
+    VERTICAL = 1
     HORIZONTAL = 2
     FIND_THE_BALL = 3
     RANDOM = 4
+
 
 # Classe Ball
 class Ball:
@@ -38,12 +41,14 @@ class Ball:
             self.x_speed = BALL_SPEED / 2.0
             self.y_speed = BALL_SPEED / 2.0
 
+
 # Função para criar a bolinha
 def create_ball(level):
     ball = Ball(level)
     ball.shape.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
 
     return ball
+
 
 # Função para criar a simulação
 def create_simulation(screen, level, type_simulation):
@@ -133,6 +138,7 @@ def create_simulation(screen, level, type_simulation):
         else:
             clock.tick(60)
 
+
 # Função para criar o menu de seleção de nível
 def select_level(screen):
     font = pygame.font.SysFont('Arial', 24)
@@ -179,7 +185,6 @@ def select_level(screen):
         pygame.time.Clock().tick(60)
 
 
-
 def main():
     pygame.init()
     info = pygame.display.Info()
@@ -191,6 +196,55 @@ def main():
     pygame.display.set_caption('ReabilitVest')
     font = pygame.font.SysFont('Arial', 24)
 
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if SCREEN_WIDTH // 2 - 100 < event.pos[0] < SCREEN_WIDTH // 2 + 100 and SCREEN_HEIGHT // 2 - 150 < \
+                        event.pos[1] < SCREEN_HEIGHT // 2 - 100:
+                    level = select_level(screen)
+                    if level != Level.RETURN:
+                        create_simulation(screen, level, SimulationType.VERTICAL)
+                elif SCREEN_WIDTH // 2 - 100 < event.pos[0] < SCREEN_WIDTH // 2 + 100 and SCREEN_HEIGHT // 2 - 50 < \
+                        event.pos[1] < SCREEN_HEIGHT // 2:
+                    level = select_level(screen)
+                    if level != Level.RETURN:
+                        create_simulation(screen, level, SimulationType.HORIZONTAL)
+                elif SCREEN_WIDTH // 2 - 100 < event.pos[0] < SCREEN_WIDTH // 2 + 100 and SCREEN_HEIGHT // 2 + 50 < \
+                        event.pos[1] < SCREEN_HEIGHT // 2 + 100:
+                    level = select_level(screen)
+                    if level != Level.RETURN:
+                        create_simulation(screen, level, SimulationType.FIND_THE_BALL)
+                elif SCREEN_WIDTH // 2 - 100 < event.pos[0] < SCREEN_WIDTH // 2 + 100 and SCREEN_HEIGHT // 2 + 150 < \
+                        event.pos[1] < SCREEN_HEIGHT // 2 + 200:
+                    level = select_level(screen)
+                    if level != Level.RETURN:
+                        create_simulation(screen, level, SimulationType.RANDOM)
+
+        screen.fill((0, 0, 0))
+        text_title = font.render('ReabilitVest', True, (255, 255, 255))
+        screen.blit(text_title, (SCREEN_WIDTH // 2 - 50, 20))
+        pygame.draw.rect(screen, (0, 0, 255), (SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 150, 200, 50))
+
+        text_vertical = font.render('Vertical', True, (255, 255, 255))
+        screen.blit(text_vertical, (SCREEN_WIDTH // 2 - 80, SCREEN_HEIGHT // 2 - 140))
+        pygame.draw.rect(screen, (0, 0, 255), (SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 50, 200, 50))
+
+        text_horizontal = font.render('Horizontal', True, (255, 255, 255))
+        screen.blit(text_horizontal, (SCREEN_WIDTH // 2 - 80, SCREEN_HEIGHT // 2 - 40))
+        pygame.draw.rect(screen, (0, 0, 255), (SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 50, 200, 50))
+
+        text_find_the_ball = font.render('Pique Esconde', True, (255, 255, 255))
+        screen.blit(text_find_the_ball, (SCREEN_WIDTH // 2 - 80, SCREEN_HEIGHT // 2 + 60))
+        pygame.draw.rect(screen, (0, 0, 255), (SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 150, 200, 50))
+
+        text_random = font.render('Aleatório', True, (255, 255, 255))
+        screen.blit(text_random, (SCREEN_WIDTH // 2 - 80, SCREEN_HEIGHT // 2 + 160))
+        pygame.display.flip()
+        pygame.time.Clock().tick(60)
+
+
 if __name__ == '__main__':
     main()
-
